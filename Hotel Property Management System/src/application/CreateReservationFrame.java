@@ -29,7 +29,7 @@ public class CreateReservationFrame implements ActionListener {
 	private JTextField phoneInput;
 	private JTextField addressInput;
 	private JPasswordField creditInput;
-	public static  JTextArea feedback;
+	public static JTextArea feedback;
     public JButton updateButton;
 	private JComboBox<Object> roomSelect;
 	private JDateChooser checkInChooser;

@@ -58,7 +58,7 @@ public class ReservationController implements ActionListener {
 	}
 	
 	public void searchAndDisplay() {
-		System.out.println(resNum.getText());
+	  System.out.println(resNum.getText());
 	  newRes =SearchingLogic.searchByResNum(Integer.parseInt(resNum.getText()));
 	  fName.setText(newRes.customer.getFirst_name());
 	  lName.setText(newRes.customer.getLast_name());
@@ -93,7 +93,7 @@ public class ReservationController implements ActionListener {
 				newRes.setRoom(room);
 				room.roomReserved();
 				ReservationLogic.addReservation(newRes);
-				CreateReservationFrame.feedback.setText(newRes.toString()); //*does not include room info
+				CreateReservationFrame.feedback.setText(newRes.toString());
 			}
 			else {
 				CreateReservationFrame.feedback.setText("Error: Selected room is not available.");
@@ -102,7 +102,7 @@ public class ReservationController implements ActionListener {
 	}
 	
 	//Check if reservation input is valid
-	private boolean inputValid(String credit) {
+	public boolean inputValid(String credit) {
 		boolean valid = true;
 		
 		//Check phone number
