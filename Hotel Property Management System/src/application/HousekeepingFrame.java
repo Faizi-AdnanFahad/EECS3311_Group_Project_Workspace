@@ -12,6 +12,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
@@ -23,7 +24,7 @@ import java.awt.event.ItemEvent;
 
 
 public class HousekeepingFrame implements ActionListener {
-	private JFrame frame =new JFrame();
+	private JFrame frame = new JFrame();
 	private JTable table;
 	public static DefaultTableModel model;
 	private Checkbox checkDirty;
@@ -204,13 +205,11 @@ public class HousekeepingFrame implements ActionListener {
 			}
 			roomNum = (roomNum % 9) * 100;
 		}
-		
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 10; j++) {
 				box.addItem(roomArray[i][j]);
 			}
 		}
-		
 		return box;
 	}
 	
@@ -228,15 +227,12 @@ public class HousekeepingFrame implements ActionListener {
 				roomArray[i][j] = roomNum--;
 			}
 			roomNum = (roomNum-100) + 10;
-
 		}
-		
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 10; j++) {
 				box.addItem(roomArray[i][j]);
 			}
 		}
-		
 		return box;
 	}
 	
@@ -267,7 +263,7 @@ public class HousekeepingFrame implements ActionListener {
 		
 		// show all rooms and room status by default when frame first appears
 		HousekeepingController ctlr = new HousekeepingController("100", "509", true, true, true, true, true);
-		ctlr.displayRoomDetails();;
+		ctlr.displayRoomDetails();
 		
 		// drop-down selection for room status column - updates database when changed
 		JComboBox<String> roomStatusBox = new JComboBox<>();
@@ -340,7 +336,11 @@ public class HousekeepingFrame implements ActionListener {
 			frame.dispose();
 		}
 		if (e.getSource() == searchButton) {
-			HousekeepingController ctrl = new HousekeepingController((String) fromComboBox.getSelectedItem(), (String) toComboBox.getSelectedItem(), dirty, clean, inspected, occupied, vacant);
+			model.setRowCount(0);
+			if ( (checkDirty.getState() == false) && (checkClean.getState() == false) && (checkInspected.getState() == false) && (checkOccupied.getState() == false) && (checkVacant.getState() == false) ) {
+				JOptionPane.showMessageDialog(frame, "Please select at least one checkbox!");
+			}
+			HousekeepingController ctrl = new HousekeepingController(fromComboBox.getSelectedItem().toString(), toComboBox.getSelectedItem().toString(), dirty, clean, inspected, occupied, vacant);
 			ctrl.displayRoomDetails();
 		}
 		if (e.getSource() == selectAllButton) {
@@ -357,23 +357,6 @@ public class HousekeepingFrame implements ActionListener {
 				}
 			}	
 		}
-	}
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-						if("Nimbus".equals(info.getName()))
-						 UIManager.setLookAndFeel(info.getClassName());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				ActionListener hskpFrame  = new HousekeepingFrame();
-
-			}
-		});
 	}
 	
 }
