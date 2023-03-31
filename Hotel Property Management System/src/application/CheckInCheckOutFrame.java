@@ -260,7 +260,14 @@ public class CheckInCheckOutFrame implements ActionListener {
 			if (rdbtnDep.isSelected() && !resNumIsEmpty) {
 				// call controller to display the res details for specified room
 				model.setRowCount(0);
-				
+				Object[] arr = ctrl.getResByNum(resNumInput.getText(), "Departures");
+				resNumInput.setText("");
+				if (arr != null) {
+					model.addRow(arr);
+				}
+				else {
+					this.alertMsg("The reservation number does not match today's departures!");
+				}
 			}
 			//when user searches for all arrivals
 			if (rdbtnArr.isSelected() && resNumIsEmpty) {
